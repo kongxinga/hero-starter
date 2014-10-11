@@ -67,20 +67,36 @@
 /*if in group and see injured, heal them*/
 /*if enemy higher health run*/
 /*if injured run to group or fountain*/
- 
+ /*
   var move = function(gameData, helpers) {
    var myHero = gameData.activeHero;
    if (myHero.health < 60) {
      return helpers.findNearestHealthWell(gameData);
    } else if (myHero.health>=90) {
-     return helpers.findNearestWeakerEnemy(gamedata); /*prioritize uncapped enemy mines later?*/
+     return helpers.findNearestWeakerEnemy(gamedata); 
    } else {
 	return helpers.findNearestTeamMember(gamedata);
    }
    
  };
+ */
  
  
+ 
+ /*the careful drunkard*/
+  var move = function(gameData, helpers) {
+   var myHero = gameData.activeHero;
+   
+   
+   if (myHero.health < 60) {
+     return helpers.findNearestHealthWell(gameData);
+   } else {
+        var choices = ['North', 'South', 'East', 'West'];
+   return choices[Math.floor(Math.random()*4)];
+   }
+ };
+   
+
  
 // // The "Unwise Assassin"
 // // This hero will attempt to kill the closest enemy hero. No matter what.
