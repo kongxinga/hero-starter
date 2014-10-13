@@ -87,16 +87,45 @@
   var move = function(gameData, helpers) {
    var myHero = gameData.activeHero;
    
+   var medicCall=30;
+   var painThreshold=70;
    
-   if (myHero.health < 60) {
+   //Get nearest health well stats
+  var healthWellStats = helpers.findNearestObjectDirectionAndDistance(gameData.board, myHero, function(boardTile) {
+    if (boardTile.type === 'HealthWell') {
+       return true;
+    }
+  });
+  
+  // Get friendly dying hero stats
+  var teamHeroStats = helpers.findNearestObjectDirectionAndDistance(gameData.board, myHero, function(heroTile) {
+    return heroTile.type === 'Hero' && heroTile.team === myHero.team && heroTile.health < medicCall;
+  });
+  
+  var distanceToDyingHero = teamHeroStats.distance;
+  var directionToDyingHero = teamHeroStats.direction;
+  
+  var distanceToHealthWell = healthWellStats.distance;
+  var directionToHealthWell = healthWellStats.direction;
+   
+   
+   if (myHero.health < painThreshold) {
      return helpers.findNearestHealthWell(gameData);
+     
+   } else if (myHero.health < 100 && distanceToHealthWell === 1) {
+    //Heal if you aren't full health and are close to a health well already
+    return directionToHealthWell;
+  } else if (distanceToDyingHero === 1){
+    //heal dying friends
+    return directionToDyingHero;
    } else {
         var choices = ['North', 'South', 'East', 'West'];
    return choices[Math.floor(Math.random()*4)];
    }
  };
    
-
+//why do people uglify their code. You should be confident in the superiority of your design 
+//without relying on obfuscation
  
 // // The "Unwise Assassin"
 // // This hero will attempt to kill the closest enemy hero. No matter what.
