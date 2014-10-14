@@ -204,7 +204,7 @@ var graveStats = helpers.findNearestObjectDirectionAndDistance(gameData.board, m
 		else {
 		
 		
-   return choices[Math.floor(Math.random()*4)];
+   return firstChoice;
    }
    }
  };
