@@ -191,7 +191,7 @@ var graveStats = helpers.findNearestObjectDirectionAndDistance(gameData.board, m
         var choices = ['North', 'South', 'East', 'West'];
 		   var firstChoice= choices[Math.floor(Math.random()*4)];
 		   
-		   if (firstChoice===directionToTree &&){
+		   if (firstChoice===directionToTree && distanceToTree===1){
 		   //if the tree is near and we chose tree, truncate the array and choose again
 				var newArray = [];
 				for(var i=0;i<choices.length;i++)
