@@ -80,8 +80,79 @@
    
  };
  */
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> c9ddb80fad95bcdd6262c3ef0ad7a6dd4347d9f2
  
  
+ /*the careful drunkard*/
+  var move = function(gameData, helpers) {
+   var myHero = gameData.activeHero;
+   
+   var medicCall=60;
+   var painThreshold=70;
+   var bloodLust=30;
+   
+   
+   //Get nearest health well stats
+  var healthWellStats = helpers.findNearestObjectDirectionAndDistance(gameData.board, myHero, function(boardTile) {
+    if (boardTile.type === 'HealthWell') {
+       return true;
+    }
+  });
+  
+  // Get friendly dying hero stats
+  var teamHeroStats = helpers.findNearestObjectDirectionAndDistance(gameData.board, myHero, function(heroTile) {
+    return heroTile.type === 'Hero' && heroTile.team === myHero.team && heroTile.health <= medicCall;
+  });
+  
+  
+  
+  
+  //get nearest critical enemy stats
+  
+    var enemyHeroStats = helpers.findNearestObjectDirectionAndDistance(gameData.board, myHero, function(heroTile) {
+    return heroTile.type === 'Hero' && heroTile.team !== myHero.team && heroTile.health <= bloodLust;
+  });
+  
+  
+  var distanceToDyingHero = teamHeroStats.distance;
+  var directionToDyingHero = teamHeroStats.direction;
+  
+  var distanceToHealthWell = healthWellStats.distance;
+  var directionToHealthWell = healthWellStats.direction;
+  
+  var distanceToBadHero = enemyHeroStats.distance;
+  var directionToBadHero = enemyHeroStats.direction;
+   
+   
+   if (myHero.health <= painThreshold) {
+     return helpers.findNearestHealthWell(gameData);
+     
+   } else if (myHero.health < 100 && distanceToHealthWell === 1) {
+    //Heal if you aren't full health and are close to a health well already.
+    //TOPOFF
+    return directionToHealthWell;
+  } else if (distanceToDyingHero === 1){
+    //heal dying friends
+    return directionToDyingHero;
+    
+  } else if (distanceToBadHero === 1){
+    //direct attacks to heroes we can kill in one blow
+    return directionToBadHero;    
+    
+    
+    
+    
+   } else {
+        var choices = ['North', 'South', 'East', 'West'];
+   return choices[Math.floor(Math.random()*4)];
+   }
+ };
+   
+//why do people uglify their code. You should be confident in the superiority of your design 
+//without relying on obfuscation
  
  /*the careful drunkard*/
   var move = function(gameData, helpers) {
