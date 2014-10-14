@@ -80,10 +80,7 @@
    
  };
  */
-<<<<<<< HEAD
-=======
- 
->>>>>>> c9ddb80fad95bcdd6262c3ef0ad7a6dd4347d9f2
+
  
  
  /*the careful drunkard*/
